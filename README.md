@@ -212,6 +212,7 @@ reviewed-git-publish/
 ├── SKILL.md                       Agent instructions and approval boundaries
 ├── README.md                      Default English overview
 ├── README.zh-CN.md                Simplified Chinese overview
+├── LICENSE                        MIT license
 ├── agents/openai.yaml             Agent metadata
 ├── references/                    Current feature-based documentation
 │   ├── workflow.md
@@ -256,6 +257,10 @@ See [Architecture](references/architecture.md) for module responsibilities.
 
 See [Safety](references/safety.md) and
 [Troubleshooting](references/troubleshooting.md) for details.
+
+## License
+
+Released under the [MIT License](LICENSE). Copyright (c) 2026 Homeuh.
 
 ## Documentation
 

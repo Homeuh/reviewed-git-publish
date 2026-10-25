@@ -204,6 +204,7 @@ reviewed-git-publish/
 ├── SKILL.md                       Agent 必须遵守的行为和审批边界
 ├── README.md                      默认英文产品介绍
 ├── README.zh-CN.md                简体中文产品介绍
+├── LICENSE                        MIT 开源许可证
 ├── agents/openai.yaml             Agent 元信息
 ├── references/                    当前有效的按领域划分的文档
 │   ├── workflow.md
@@ -244,6 +245,10 @@ Agent 评估、打包工具、研发过程归档和实验性发布原型，不�
 
 完整限制见 [安全说明](references/safety.md) 与
 [故障排查](references/troubleshooting.md)。
+
+## 开源许可证
+
+本项目使用 [MIT License](LICENSE) 开源，版权归属 Copyright (c) 2026 Homeuh。
 
 ## 文档导航
 
