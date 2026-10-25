@@ -1,0 +1,18 @@
+{
+  "policyVersion": 1,
+  "allowedRemotes": [
+    "origin"
+  ],
+  "allowedBranches": [
+    "main",
+    "release/*"
+  ],
+  "allowPush": true,
+  "requireValidations": true,
+  "blockedPaths": [
+    "dist/**",
+    "build/**",
+    "node_modules/**"
+  ],
+  "maxCommits": 8
+}

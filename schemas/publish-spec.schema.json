@@ -1,0 +1,79 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Reviewed Git Publish plan input specification",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "remote",
+    "branch",
+    "commits",
+    "excluded",
+    "validations",
+    "push"
+  ],
+  "properties": {
+    "remote": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9_.-]+$"
+    },
+    "branch": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Must match checked-out local branch"
+    },
+    "push": {
+      "type": "boolean"
+    },
+    "excluded": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "validations": {
+      "type": "array",
+      "items": {
+        "type": "array",
+        "minItems": 1,
+        "items": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "commits": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "message",
+          "chinese",
+          "paths"
+        ],
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "English Conventional Commit subject, optionally followed by a blank line, body and footer; entire message SHA-256 bound"
+          },
+          "chinese": {
+            "type": "string",
+            "minLength": 1
+          },
+          "paths": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        }
+      }
+    }
+  }
+}

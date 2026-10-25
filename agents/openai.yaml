@@ -1,0 +1,4 @@
+interface:
+  display_name: 'Reviewed Git Publish'
+  short_description: 'Review changes and publish clean atomic Git commits'
+  default_prompt: 'Use $reviewed-git-publish to review my Git changes, choose the appropriate staging workflow, suggest readable bilingual atomic commits and list excluded files, then wait for my exact plan-digest approval before committing or pushing.'

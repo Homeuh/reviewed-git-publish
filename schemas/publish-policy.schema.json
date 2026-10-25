@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Reviewed Git Publish policy v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "policyVersion",
+    "allowedRemotes",
+    "allowedBranches",
+    "allowPush",
+    "requireValidations",
+    "blockedPaths",
+    "maxCommits"
+  ],
+  "properties": {
+    "policyVersion": {
+      "const": 1
+    },
+    "allowedRemotes": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "allowedBranches": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "allowPush": {
+      "type": "boolean"
+    },
+    "requireValidations": {
+      "type": "boolean"
+    },
+    "blockedPaths": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "maxCommits": {
+      "type": "integer",
+      "minimum": 1
+    }
+  }
+}
