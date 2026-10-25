@@ -18,6 +18,21 @@ Agent 负责理解代码差异、组织提交和解释原因；本 Skill 自带�
 执行器负责冻结具体 Git 状态、校验用户批准的计划，并按**精确文件范围**执行。
 这里的批准是本地开发流程中的显式确认，**不是独立认证的人类签名**。
 
+## 快速安装
+
+在目标项目目录使用 [Skills CLI](https://github.com/vercel-labs/skills) 安装（需要 Node.js 22.20+）：
+
+```bash
+npx skills add Homeuh/reviewed-git-publish
+```
+
+也可以**直接让编程 Agent** 从
+[GitHub](https://github.com/Homeuh/reviewed-git-publish)
+安装，要求它先检查脚本、确认目标安装路径。
+
+指定 Agent、全局安装、ZIP 安装及版本更新请参阅下方的
+[安装与使用](#安装与使用)或[安装指南](references/installation.md)。
+
 ## 能做什么
 
 | 能力 | 表现 |
@@ -102,12 +117,56 @@ Commit 2
 同一个文件中不同 Hunk 的自动拆分不在支持范围内：有意义的说明和可追踪的
 Git 历史比过度拆分更重要。
 
-## 快速安装
+## 安装与使用
 
-需要 **Python 3.9+** 和支持 `--pathspec-from-file` 的 Git；
-没有第三方 Python 依赖，也不依赖某种前端或后端框架。
+**Skill 运行环境：** Python 3.9+、支持 `--pathspec-from-file` 的 Git。
+无需第三方 Python 依赖，也不依赖特定前端或后端框架。
 
-将发行 ZIP 解压得到 `reviewed-git-publish/`，进入该目录：
+### 推荐：使用 Skills CLI 安装
+
+此安装方式需要 Node.js 22.20+。在**目标项目目录**执行：
+
+```bash
+npx skills add Homeuh/reviewed-git-publish
+```
+
+按提示选择 Agent 和安装范围，也可以指定 Agent 或全局安装：
+
+```bash
+npx skills add Homeuh/reviewed-git-publish -a codex
+npx skills add Homeuh/reviewed-git-publish -a antigravity
+npx skills add Homeuh/reviewed-git-publish -g
+```
+
+安装前仅查看可发现的 Skill：
+
+```bash
+npx skills add Homeuh/reviewed-git-publish --list
+```
+
+Skills CLI 从 GitHub 仓库分支获取内容，**不是**从 GitHub Release
+附件安装；请先检查源码和目标安装路径。后续可使用
+`npx skills check`、`npx skills update` 检查和更新。
+
+### 直接让编程 Agent 帮你安装
+
+把这段话发给拥有终端权限的 Agent：
+
+> 请从 https://github.com/Homeuh/reviewed-git-publish
+> 将 `reviewed-git-publish` Skill 安装到当前项目。
+> 安装前先检查 `SKILL.md` 和可执行脚本。
+> 如果有 Node.js，优先使用
+> `npx skills add Homeuh/reviewed-git-publish --skill reviewed-git-publish`；
+> 否则按仓库的 Release ZIP/Python 安装说明操作。
+> 确认安装目录；如果已安装同名 Skill，覆盖前先征求我的同意。
+> 安装过程中不要执行 Git 发布器、提交或推送。
+
+这种方式要求 Agent 能操作终端，且用户允许安装软件；
+仅粘贴 GitHub 地址并不代表 Skill 已自动安装。
+
+### 备用：通过 Release ZIP 安装
+
+下载官方 Release ZIP，解压后进入 `reviewed-git-publish/` 目录：
 
 ```bash
 python3 -B scripts/manage_skill.py install \
@@ -117,14 +176,7 @@ python3 -B scripts/manage_skill.py status \
   --target /path/to/your-repo/.agents/skills
 ```
 
-然后在支持该 Skill 位置的 Agent 中自然语言触发审核即可。
-Agent 应展示完整 SHA-256，再由你明确发送：
-
-```text
-COMMIT PLAN APPROVED <实际显示的 64 位指纹>
-```
-
-更新到另一个版本：
+更新到新版 ZIP：
 
 ```bash
 python3 -B scripts/manage_skill.py update \
@@ -132,7 +184,17 @@ python3 -B scripts/manage_skill.py update \
   --source /path/to/new-reviewed-git-publish.zip
 ```
 
-安装器不会自动执行任何 Git 提交或推送；升级会备份旧安装版本。
+Python 安装器不会自动暂存、提交或推送 Git 变更，升级时会保留旧版本备份。
+
+### 安装完成后
+
+在支持该 Skill 的 Agent 中发起代码审核。Agent 应展示真正的
+SHA-256 计划指纹；**审核清楚提交内容之后**，再明确发送：
+
+```text
+COMMIT PLAN APPROVED <实际显示的 64 位指纹>
+```
+
 详见 [安装与维护](references/installation.md)。
 
 ## Skill 内部如何组织

@@ -21,6 +21,22 @@ and operates on **exact file manifests** rather than broad staging patterns.
 Approval is an explicit **local developer confirmation**, not an independently
 authenticated human signature.
 
+## Quick Start
+
+Install with the [Skills CLI](https://github.com/vercel-labs/skills) (Node.js 22.20+) from your project directory:
+
+```bash
+npx skills add Homeuh/reviewed-git-publish
+```
+
+Or **ask your coding Agent** to install the Skill from
+[GitHub](https://github.com/Homeuh/reviewed-git-publish), reviewing its scripts
+and confirming the installation location first.
+
+For Agent-specific, global, ZIP, and update options, see
+[Installation & Usage](#installation--usage) or the
+[installation guide](references/installation.md).
+
 ## Features
 
 | Capability | What it does |
@@ -105,13 +121,58 @@ A simple fix may use a single-line Commit Subject; a Body is not mandatory.
 Automatic Hunk-level splitting is intentionally unsupported. Meaningful
 intent and traceable Git history matter more than creating extra commits.
 
-## Quick start
+## Installation & Usage
 
-**Requirements:** Python 3.9+ and Git supporting `--pathspec-from-file`.
-No third-party Python packages or specific frontend/backend framework required.
+**Runtime requirements:** Python 3.9+ and Git supporting `--pathspec-from-file`.
+No third-party Python packages or specific application framework required.
 
-Unpack the release ZIP to get a `reviewed-git-publish/` directory, then run
-these commands **inside that directory**:
+### Recommended: install with Skills CLI
+
+Requires Node.js 22.20+ to run the installer. From your **target project**:
+
+```bash
+npx skills add Homeuh/reviewed-git-publish
+```
+
+Choose the Agent and installation scope interactively. For a specific Agent,
+or to install for your user account across projects:
+
+```bash
+npx skills add Homeuh/reviewed-git-publish -a codex
+npx skills add Homeuh/reviewed-git-publish -a antigravity
+npx skills add Homeuh/reviewed-git-publish -g
+```
+
+To preview what the CLI discovers without installing:
+
+```bash
+npx skills add Homeuh/reviewed-git-publish --list
+```
+
+The Skills CLI installs from the repository's Git branch, not from an attached
+GitHub Release ZIP. Inspect the source and chosen installation paths before
+accepting. You can use `npx skills check` and `npx skills update` later.
+
+### Ask your coding Agent to install it
+
+Give an Agent with terminal access this instruction:
+
+> Install the `reviewed-git-publish` Agent Skill from
+> https://github.com/Homeuh/reviewed-git-publish into this project.
+> Review its `SKILL.md` and executable scripts first. Prefer
+> `npx skills add Homeuh/reviewed-git-publish --skill reviewed-git-publish`
+> when Node.js is available; otherwise follow the repository's official
+> ZIP/Python installation instructions. Confirm the target Skills directory
+> and ask before replacing an existing installation. Do not run the Git
+> publishing executor, commit, or push as part of installation.
+
+An Agent needs access to a terminal and your permission to install software;
+simply pasting the GitHub URL does not automatically install a Skill.
+
+### Alternative: install from a Release ZIP
+
+Download and unpack the official Release ZIP to get a
+`reviewed-git-publish/` directory. Run from **inside that directory**:
 
 ```bash
 python3 -B scripts/manage_skill.py install \
@@ -121,15 +182,7 @@ python3 -B scripts/manage_skill.py status \
   --target /path/to/your-repo/.agents/skills
 ```
 
-Ask your Agent to review the repository using this Skill. It should show
-the real complete SHA-256 plan digest. Only after reviewing the full scope,
-provide explicit approval:
-
-```text
-COMMIT PLAN APPROVED <actual 64-character plan digest>
-```
-
-To update to a newer release:
+For a newer downloaded ZIP, use the built-in updater:
 
 ```bash
 python3 -B scripts/manage_skill.py update \
@@ -137,9 +190,20 @@ python3 -B scripts/manage_skill.py update \
   --source /path/to/new-reviewed-git-publish.zip
 ```
 
-The installer does **not** stage, commit, or push Git changes. Updates retain
-a backup of the previous installation. See
-[Installation and updates](references/installation.md).
+The Python installer does **not** stage, commit, or push Git changes. It keeps
+a backup during updates.
+
+### After installation
+
+Ask your Agent to review the repository using the installed Skill. It should
+show the real complete SHA-256 plan digest. Only after reviewing the exact
+commit plan, provide explicit approval:
+
+```text
+COMMIT PLAN APPROVED <actual 64-character plan digest>
+```
+
+See [Installation and updates](references/installation.md) for details.
 
 ## Project structure
 
